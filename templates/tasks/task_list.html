@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ project.name }} — Tasks</h2>
+{% if user.role == 'admin' %}
+    <a href="{% url 'task_create' project.pk %}" class="btn">+ New Task</a>
+{% endif %}
+<ul>
+    {% for task in tasks %}
+        <li>
+            {{ task.title }} — {{ task.status }}
+            {% if task.assigned_to %} ({{ task.assigned_to.username }}) {% endif %}
+            {% if user.role == 'admin' %}
+                <a href="{% url 'task_update' task.pk %}">Edit</a>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No tasks yet.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'project_list' %}">Back</a>
+{% endblock %}

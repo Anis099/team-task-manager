@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+<h3>My Projects</h3>
+{% if user.role == 'admin' %}
+    <a href="{% url 'project_create' %}" class="btn">+ New Project</a>
+{% endif %}
+<ul>
+    {% for project in projects %}
+        <li><a href="{% url 'task_list' project.pk %}">{{ project.name }}</a></li>
+    {% empty %}
+        <li>No projects yet.</li>
+    {% endfor %}
+</ul>
+<h3>My Tasks</h3>
+<ul>
+    {% for task in tasks %}
+        <li>{{ task.title }} — {{ task.status }} ({{ task.project.name }})</li>
+    {% empty %}
+        <li>No tasks assigned.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>All Projects</h2>
+{% if user.role == 'admin' %}
+    <a href="{% url 'project_create' %}" class="btn">+ New Project</a>
+{% endif %}
+<ul>
+    {% for project in projects %}
+        <li><a href="{% url 'task_list' project.pk %}">{{ project.name }}</a> — {{ project.description }}</li>
+    {% empty %}
+        <li>No projects yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
